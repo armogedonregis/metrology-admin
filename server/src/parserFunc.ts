@@ -9,7 +9,7 @@ let id = 0;
 
 export default function ParserFunc(url: string, path: string) {
     (async () => {
-        const browser = await puppeteer.launch({ executablePath: '/usr/bin/chromium-browser' })
+        const browser = await puppeteer.launch({ headless: 'new', args: ["--no-sandbox"] })
         const page = await browser.newPage();
         await page.goto(url);
         const mapsHandles = await page.$$('body > div.siteContent > div.mainRating > div > table > tbody > tr');

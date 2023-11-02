@@ -45,18 +45,18 @@ app.use('/api', seoRouter)
 app.get('/api/user', authenticate, userControllers.userGet)
 
 app.get('/api/company/:id', (req, res) => {
-  if(req.params.id === 'spb') {
-    res.send(JSONspb) 
+  if (req.params.id === 'spb') {
+    res.send(JSONspb)
   } else {
     res.send(JSONmsk)
   }
 })
 
 app.post('/api/toparsing', async () => {
-  Promise.allSettled([
-    await ParserFunc(url1, path1),
+
+  await ParserFunc(url1, path1),
     await ParserFunc(url2, path2)
-  ])
+
 }
 )
 
