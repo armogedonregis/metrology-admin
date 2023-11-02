@@ -7,7 +7,7 @@ let items: ICompany[] = []
 let number: number = 0;
 let id = 0;
 
-export default function ParserFunc(url: string, path: string) {
+export default async function ParserFunc(url: string, path: string) {
     (async () => {
         const browser = await puppeteer.launch({ headless: 'new', args: ["--no-sandbox"] })
         const page = await browser.newPage();
