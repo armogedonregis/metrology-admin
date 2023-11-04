@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { executablePath } from 'puppeteer';
 import fs from 'fs';
 import https from 'https';
 import { NextFunction, Request, Response } from 'express';
@@ -12,7 +12,7 @@ let id = 0;
 export default function Parser(req: Request, res: Response, next: NextFunction) {
     try {
         (async () => {
-            const browser = await puppeteer.launch({ headless: 'new' })
+            const browser = await puppeteer.launch({ headless: 'new', args: ["--no-sandbox"] })
             const page = await browser.newPage();
             await page.goto('https://vodochet.ru/');
             const mapsHandles = await page.$$('body > div.siteContent > div.mainRating > div > table > tbody > tr');
@@ -32,6 +32,7 @@ export default function Parser(req: Request, res: Response, next: NextFunction) 
                 let dateSend = "";
                 let review = "";
                 let requestCount = "";
+                id++;
                 try {
                     img = await page.evaluate(
                         (el: any) => el.querySelector("tr > td.tbLogo > a > img").getAttribute("data-basicimg"), mapshandle
@@ -42,8 +43,6 @@ export default function Parser(req: Request, res: Response, next: NextFunction) 
                     title = await page.evaluate(
                         (el: any) => el.querySelector("tr > td.tbName > a").textContent, mapshandle
                     );
-
-                    id += 1;
 
                     const titleUrl = await page.evaluate(
                         (el: any) => el.querySelector("tr > td.tbName > a").href, mapshandle
