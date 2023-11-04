@@ -97,14 +97,14 @@ app.get('/api/company/msk/teploschetchikovJson', (req, res) => {
 
 
 app.post('/api/toparsing', async () => {
-
-    await ParserFunc(msk1, mskpath1, 'msk')
-    await ParserFunc(msk2, mskpath2, 'msk')
-    await ParserFunc(msk3, mskpath3, 'msk')
-    await ParserFunc(msk4, mskpath4, 'msk')
-    await ParserFunc(msk5, mskpath5, 'msk')
-    await ParserFunc(msk6, mskpath6, 'msk')
-
+  await Promise.allSettled([
+    await ParserFunc(msk1, mskpath1, 'msk'),
+    await ParserFunc(msk2, mskpath2, 'msk'),
+    await ParserFunc(msk3, mskpath3, 'msk'),
+    await ParserFunc(msk4, mskpath4, 'msk'),
+    await ParserFunc(msk5, mskpath5, 'msk'),
+    await ParserFunc(msk6, mskpath6, 'msk'),
+  ])
 }
 )
 

@@ -1,4 +1,4 @@
-import puppeteer, { executablePath } from 'puppeteer';
+import puppeteer from 'puppeteer';
 import fs from 'fs';
 import https from 'https';
 import { ICompany } from './type/type';
@@ -10,10 +10,7 @@ export default async function ParserFunc(url: string, path: string, root: string
     let number = 0;
     let id = 0;
 
-    const browser = await puppeteer.launch({
-        headless: false,
-        executablePath: executablePath()
-    })
+    const browser = await puppeteer.launch({ headless: 'new', args: ["--no-sandbox"] })
     const page = await browser.newPage();
     await page.goto(url);
 
