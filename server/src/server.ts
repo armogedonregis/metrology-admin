@@ -141,6 +141,6 @@ app.post('/api/rating-msk-6', async () => {
 }
 )
 
-app.use('/static', express.static('src/files'))
+app.use('/api/static', express.static('src/files'))
 
 server.listen(port, () => { console.log('server listening', port) });
