@@ -40,10 +40,40 @@ export const adminApi = createApi({
         url: '/user',
       }),
     }),
-    startParsing: build.mutation<any, any>({
+    ParsingOneMsk: build.mutation<any, any>({
       query: () => ({
         method: 'POST',
-        url: '/toparsing',
+        url: '/rating-msk-1',
+      }),
+    }),
+    ParsingTwoMsk: build.mutation<any, any>({
+      query: () => ({
+        method: 'POST',
+        url: '/rating-msk-2',
+      }),
+    }),
+    ParsingThreeMsk: build.mutation<any, any>({
+      query: () => ({
+        method: 'POST',
+        url: '/rating-msk-3',
+      }),
+    }),
+    ParsingFourMsk: build.mutation<any, any>({
+      query: () => ({
+        method: 'POST',
+        url: '/rating-msk-4',
+      }),
+    }),
+    ParsingFiveMsk: build.mutation<any, any>({
+      query: () => ({
+        method: 'POST',
+        url: '/rating-msk-5',
+      }),
+    }),
+    ParsingSixMsk: build.mutation<any, any>({
+      query: () => ({
+        method: 'POST',
+        url: '/rating-msk-6',
       }),
     }),
     // get all notes
@@ -104,7 +134,12 @@ export const {
   // user method
   useLoginUserMutation,
   useGetUserQuery,
-  useStartParsingMutation,
+  useParsingOneMskMutation,
+  useParsingTwoMskMutation,
+  useParsingThreeMskMutation,
+  useParsingFourMskMutation,
+  useParsingFiveMskMutation,
+  useParsingSixMskMutation,
   useGetAllNotesQuery,
   useCreateNoteMutation,
   useDeleteNoteMutation,

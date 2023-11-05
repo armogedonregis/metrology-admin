@@ -55,9 +55,26 @@ const msk6 = 'https://vodochet.ru/ustanovka-schetchikov-tepla-v-moskve-raiting'
 const mskpath6 = 'ustanovka-schetchikov-tepla-v-moskve-raiting'
 
 
-const url2 = 'https://spb.vodochet.ru'
-const path2 = 'spb'
+const url1 = 'https://spb.vodochet.ru'
+const path1 = 'home'
 
+const url2 = 'https://spb.vodochet.ru/zamena-schetchikov-vody-rating'
+const path2 = 'home'
+
+const url3 = 'https://spb.vodochet.ru/ustanovka-schetchikov-vody-rating'
+const path3 = 'home'
+
+const url4 = 'https://spb.vodochet.ru/poverka-teploschetchikov'
+const path4 = 'home'
+
+const url5 = 'https://spb.vodochet.ru/zamena-teploschetchikov-rating'
+const path5 = 'home'
+
+const url6 = 'https://spb.vodochet.ru/ustanovka-teploschetchikov-rating'
+const path6 = 'home'
+
+const url7 = 'https://spb.vodochet.ru/ustanovka-konditsionerov'
+const path7 = 'home'
 
 app.post('/api/login', userControllers.userLogin)
 
@@ -94,17 +111,33 @@ app.get('/api/company/msk/teploschetchikovJson', (req, res) => {
 })
 
 
+app.post('/api/rating-msk-1', async () => {
+    await ParserFunc(msk1, mskpath1, 'msk')
+}
+)
 
+app.post('/api/rating-msk-2', async () => {
+    await ParserFunc(msk2, mskpath2, 'msk')
+}
+)
 
-app.post('/api/toparsing', async () => {
-  await Promise.allSettled([
-    await ParserFunc(msk1, mskpath1, 'msk'),
-    await ParserFunc(msk2, mskpath2, 'msk'),
-    await ParserFunc(msk3, mskpath3, 'msk'),
-    await ParserFunc(msk4, mskpath4, 'msk'),
-    await ParserFunc(msk5, mskpath5, 'msk'),
-    await ParserFunc(msk6, mskpath6, 'msk'),
-  ])
+app.post('/api/rating-msk-3', async () => {
+  await ParserFunc(msk3, mskpath3, 'msk')
+}
+)
+
+app.post('/api/rating-msk-4', async () => {
+  await ParserFunc(msk4, mskpath4, 'msk')
+}
+)
+
+app.post('/api/rating-msk-5', async () => {
+  await ParserFunc(msk5, mskpath5, 'msk')
+}
+)
+
+app.post('/api/rating-msk-6', async () => {
+  await ParserFunc(msk6, mskpath6, 'msk')
 }
 )
 

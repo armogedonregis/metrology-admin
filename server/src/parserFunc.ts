@@ -1,19 +1,19 @@
-import puppeteer from 'puppeteer';
+import puppeteer, { executablePath } from 'puppeteer';
 import fs from 'fs';
 import https from 'https';
 import { ICompany } from './type/type';
 
 
 export default async function ParserFunc(url: string, path: string, root: string) {
-
     let items: ICompany[] = []
     let number = 0;
     let id = 0;
 
-    const browser = await puppeteer.launch({ headless: 'new', args: ["--no-sandbox"] })
+    const browser = await puppeteer.launch({ headless: false, 
+        executablePath: executablePath(), })
     const page = await browser.newPage();
     await page.goto(url);
-
+    
     const mapsHandles = await page.$$('body > div.siteContent > div.mainRating > div > table > tbody > tr');
 
     for (const mapshandle of mapsHandles) {
