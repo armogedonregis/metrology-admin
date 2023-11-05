@@ -3,12 +3,10 @@ import fs from 'fs';
 import https from 'https';
 import { ICompany } from './type/type';
 
-
 export default async function ParserFunc(url: string, path: string, root: string) {
     let items: ICompany[] = []
     let number = 0;
     let id = 0;
-
     const browser = await puppeteer.launch({ headless: 'new', args: ["--no-sandbox"] })
     const page = await browser.newPage();
     await page.goto(url);
@@ -57,8 +55,7 @@ export default async function ParserFunc(url: string, path: string, root: string
                     (el: any) => el.querySelector('.mail').href, searchEmail[0]
                 );
                 number += 1;
-                await pages.close();
-                console.log(number, title, email);
+                console.log(number, title, email, img);
 
             } catch (error) { }
 
@@ -124,9 +121,12 @@ export default async function ParserFunc(url: string, path: string, root: string
         items.push({ id, img, email, title, finalRating, goodRating, fastRating, lowRating, oficialPrice, peoplePrice, ratingPrice, attestat, dateSend, review, requestCount });
     }
 
+    fs.rm(`src/data/${root}/${path}/output.json`, () => {});
+
     fs.mkdir(`src/data/${root}/${path}`, async () => {
         fs.writeFile(`src/data/${root}/${path}/output.json`, JSON.stringify(items), async (err) => {
             if (err) {
+                await browser.close();
                 console.error(err);
             } else {
                 console.log("File saved successfully");
@@ -136,7 +136,7 @@ export default async function ParserFunc(url: string, path: string, root: string
                     try {
                         items.map(async (item) => {
 
-                            https.get(`${url}/${item.img}`, res => {
+                            https.get(`https://vodochet.ru/${item.img}`, res => {
                                 const stream = fs.createWriteStream(`src/files/${item.img.substring(item.img.lastIndexOf('/') + 1)}`)
                                 res.pipe(stream);
                                 stream.on('finish', () => {
@@ -146,6 +146,7 @@ export default async function ParserFunc(url: string, path: string, root: string
 
                         })
                     } catch (err) {
+                        await browser.close();
                         console.log(err)
                     }
                 });

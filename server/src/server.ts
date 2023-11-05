@@ -9,14 +9,6 @@ import seoRouter from './routes/seo'
 import { Server } from 'socket.io';
 import ParserFunc from './parserFunc';
 
-import HomeJson from './data/msk/home/output.json'
-import poverkaJson from './data/msk/poverka-teploschetchikov-v-moskve-raiting/output.json'
-import ustanovkaJson from './data/msk/ustanovka-schetchikov-tepla-v-moskve-raiting/output.json'
-import schetchikovJson from './data/msk/ustanovka-schetchikov-vody-v-moskve-raiting/output.json'
-import zamenaJson from './data/msk/zamena-schetchikov-vody-v-moskve-raiting/output.json'
-import teploschetchikovJson from './data/msk/zamena-teploschetchikov-v-moskve-raiting/output.json'
-
-
 
 const port = process.env.PORT ? parseInt(process.env.PORT) : 5000
 
@@ -55,26 +47,26 @@ const msk6 = 'https://vodochet.ru/ustanovka-schetchikov-tepla-v-moskve-raiting'
 const mskpath6 = 'ustanovka-schetchikov-tepla-v-moskve-raiting'
 
 
-const url1 = 'https://spb.vodochet.ru'
-const path1 = 'home'
+const sb1 = 'https://spb.vodochet.ru'
+const spbpath1 = 'home'
 
-const url2 = 'https://spb.vodochet.ru/zamena-schetchikov-vody-rating'
-const path2 = 'home'
+const sb2 = 'https://spb.vodochet.ru/zamena-schetchikov-vody-rating'
+const spbpath2 = 'zamena-schetchikov-vody-rating'
 
-const url3 = 'https://spb.vodochet.ru/ustanovka-schetchikov-vody-rating'
-const path3 = 'home'
+const sb3 = 'https://spb.vodochet.ru/ustanovka-schetchikov-vody-rating'
+const spbpath3 = 'ustanovka-schetchikov-vody-rating'
 
-const url4 = 'https://spb.vodochet.ru/poverka-teploschetchikov'
-const path4 = 'home'
+const sb4 = 'https://spb.vodochet.ru/poverka-teploschetchikov'
+const spbpath4 = 'poverka-teploschetchikov'
 
-const url5 = 'https://spb.vodochet.ru/zamena-teploschetchikov-rating'
-const path5 = 'home'
+const sb5 = 'https://spb.vodochet.ru/zamena-teploschetchikov-rating'
+const spbpath5 = 'zamena-teploschetchikov-rating'
 
-const url6 = 'https://spb.vodochet.ru/ustanovka-teploschetchikov-rating'
-const path6 = 'home'
+const sb6 = 'https://spb.vodochet.ru/ustanovka-teploschetchikov-rating'
+const spbpath6 = 'ustanovka-teploschetchikov-rating'
 
-const url7 = 'https://spb.vodochet.ru/ustanovka-konditsionerov'
-const path7 = 'home'
+const sb7 = 'https://spb.vodochet.ru/ustanovka-konditsionerov'
+const spbpath7 = 'ustanovka-konditsionerov'
 
 app.post('/api/login', userControllers.userLogin)
 
@@ -85,59 +77,133 @@ app.use('/api', seoRouter)
 app.get('/api/user', authenticate, userControllers.userGet)
 
 app.get('/api/company/msk/home', (req, res) => {
-  res.send(HomeJson)
+  res.send(require('./data/msk/home/output.json'))
 })
 
 app.get('/api/company/msk/poverkaJson', (req, res) => {
-  res.send(poverkaJson)
+  res.send(require('./data/msk/poverka-teploschetchikov-v-moskve-raiting/output.json'))
 })
 
 app.get('/api/company/msk/ustanovkaJson', (req, res) => {
-  res.send(ustanovkaJson)
+  res.send(require('./data/msk/ustanovka-schetchikov-tepla-v-moskve-raiting/output.json'))
 })
 
 
 app.get('/api/company/msk/schetchikovJson', (req, res) => {
-  res.send(schetchikovJson)
+  res.send(require('./data/msk/ustanovka-schetchikov-vody-v-moskve-raiting/output.json'))
 })
 
 app.get('/api/company/msk/zamenaJson', (req, res) => {
-  res.send(zamenaJson)
+  res.send(require('./data/msk/zamena-schetchikov-vody-v-moskve-raiting/output.json'))
 })
 
 
 app.get('/api/company/msk/teploschetchikovJson', (req, res) => {
-  res.send(teploschetchikovJson)
+  res.send(require('./data/msk/zamena-teploschetchikov-v-moskve-raiting/output.json'))
+})
+
+app.get('/api/company/spb/home', (req, res) => {
+  res.send(require('./data/spb/home/output.json'))
+})
+app.get('/api/company/spb/poverkaTepl', (req, res) => {
+  res.send(require('./data/spb/poverka-teploschetchikov/output.json'))
+})
+app.get('/api/company/spb/ustanovkaVody', (req, res) => {
+  res.send(require('./data/spb/ustanovka-schetchikov-vody-rating/output.json'))
+})
+app.get('/api/company/spb/ustanovkaTepl', (req, res) => {
+  res.send(require('./data/spb/ustanovka-teploschetchikov-rating/output.json'))
+})
+app.get('/api/company/spb/ustanovkaKond', (req, res) => {
+  res.send(require('./data/spb/ustanovka-konditsionerov/output.json'))
+})
+app.get('/api/company/spb/zamenaVody', (req, res) => {
+  res.send(require('./data/spb/zamena-schetchikov-vody-rating/output.json'))
+})
+app.get('/api/company/spb/zamenaTepl', (req, res) => {
+  res.send(require('./data/spb/zamena-teploschetchikov-rating/output.json'))
 })
 
 
-app.post('/api/rating-msk-1', async () => {
-    await ParserFunc(msk1, mskpath1, 'msk')
+app.post('/api/rating-msk-1', async (req, res) => {
+  await ParserFunc(msk1, mskpath1, 'msk')
+    .finally(() => res.json({ message: 'Успешно' }))
 }
 )
 
-app.post('/api/rating-msk-2', async () => {
-    await ParserFunc(msk2, mskpath2, 'msk')
+app.post('/api/rating-msk-2', async (req, res) => {
+  await ParserFunc(msk2, mskpath2, 'msk')
+    .finally(() => res.json({ message: 'Успешно' }))
 }
 )
 
-app.post('/api/rating-msk-3', async () => {
+app.post('/api/rating-msk-3', async (req, res) => {
   await ParserFunc(msk3, mskpath3, 'msk')
+    .finally(() => res.json({ message: 'Успешно' }))
 }
 )
 
-app.post('/api/rating-msk-4', async () => {
+app.post('/api/rating-msk-4', async (req, res) => {
   await ParserFunc(msk4, mskpath4, 'msk')
+    .finally(() => res.json({ message: 'Успешно' }))
 }
 )
 
-app.post('/api/rating-msk-5', async () => {
+app.post('/api/rating-msk-5', async (req, res) => {
   await ParserFunc(msk5, mskpath5, 'msk')
+    .finally(() => res.json({ message: 'Успешно' }))
 }
 )
 
-app.post('/api/rating-msk-6', async () => {
+app.post('/api/rating-msk-6', async (req, res) => {
   await ParserFunc(msk6, mskpath6, 'msk')
+    .finally(() => res.json({ message: 'Успешно' }))
+}
+)
+
+app.post('/api/rating-spb-1', async (req, res) => {
+  await ParserFunc(sb1, spbpath1, 'spb')
+    .finally(() => res.json({ message: 'Успешно' }))
+}
+)
+
+app.post('/api/rating-spb-2', async (req, res) => {
+  await ParserFunc(sb2, spbpath2, 'spb')
+    .finally(() => res.json({ message: 'Успешно' }))
+}
+)
+
+
+app.post('/api/rating-spb-3', async (req, res) => {
+  await ParserFunc(sb3, spbpath3, 'spb')
+    .finally(() => res.json({ message: 'Успешно' }))
+}
+)
+
+
+app.post('/api/rating-spb-4', async (req, res) => {
+  await ParserFunc(sb4, spbpath4, 'spb')
+    .finally(() => res.json({ message: 'Успешно' }))
+}
+)
+
+
+app.post('/api/rating-spb-5', async (req, res) => {
+  await ParserFunc(sb5, spbpath5, 'spb')
+    .finally(() => res.json({ message: 'Успешно' }))
+}
+)
+
+app.post('/api/rating-spb-6', async (req, res) => {
+  await ParserFunc(sb6, spbpath6, 'spb')
+    .finally(() => res.json({ message: 'Успешно' }))
+}
+)
+
+
+app.post('/api/rating-spb-7', async (req, res) => {
+  await ParserFunc(sb7, spbpath7, 'spb')
+    .finally(() => res.json({ message: 'Успешно' }))
 }
 )
 
