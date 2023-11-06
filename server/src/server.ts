@@ -6,7 +6,6 @@ import userControllers from '@/resources/user/user.controllers';
 import { authenticate } from './middleware/authenticator';
 import noteRouter from './routes/note';
 import seoRouter from './routes/seo'
-import { Server } from 'socket.io';
 import ParserFunc from './parserFunc';
 
 
@@ -19,13 +18,6 @@ app.use(cors())
 app.use(express.json())
 
 const server = http.createServer(app)
-
-const io = new Server(server, {
-  cors: {
-    origin: ['http://localhost:3001'],
-    methods: ['GET', 'POST'],
-  },
-})
 
 // links
 const msk1 = 'https://vodochet.ru'
@@ -75,54 +67,6 @@ app.use('/api/note', noteRouter)
 app.use('/api', seoRouter)
 
 app.get('/api/user', authenticate, userControllers.userGet)
-
-app.get('/api/company/msk/home', (req, res) => {
-  res.send(require('./data/msk/home/output.json'))
-})
-
-app.get('/api/company/msk/poverkaJson', (req, res) => {
-  res.send(require('./data/msk/poverka-teploschetchikov-v-moskve-raiting/output.json'))
-})
-
-app.get('/api/company/msk/ustanovkaJson', (req, res) => {
-  res.send(require('./data/msk/ustanovka-schetchikov-tepla-v-moskve-raiting/output.json'))
-})
-
-
-app.get('/api/company/msk/schetchikovJson', (req, res) => {
-  res.send(require('./data/msk/ustanovka-schetchikov-vody-v-moskve-raiting/output.json'))
-})
-
-app.get('/api/company/msk/zamenaJson', (req, res) => {
-  res.send(require('./data/msk/zamena-schetchikov-vody-v-moskve-raiting/output.json'))
-})
-
-
-app.get('/api/company/msk/teploschetchikovJson', (req, res) => {
-  res.send(require('./data/msk/zamena-teploschetchikov-v-moskve-raiting/output.json'))
-})
-
-app.get('/api/company/spb/home', (req, res) => {
-  res.send(require('./data/spb/home/output.json'))
-})
-app.get('/api/company/spb/poverkaTepl', (req, res) => {
-  res.send(require('./data/spb/poverka-teploschetchikov/output.json'))
-})
-app.get('/api/company/spb/ustanovkaVody', (req, res) => {
-  res.send(require('./data/spb/ustanovka-schetchikov-vody-rating/output.json'))
-})
-app.get('/api/company/spb/ustanovkaTepl', (req, res) => {
-  res.send(require('./data/spb/ustanovka-teploschetchikov-rating/output.json'))
-})
-app.get('/api/company/spb/ustanovkaKond', (req, res) => {
-  res.send(require('./data/spb/ustanovka-konditsionerov/output.json'))
-})
-app.get('/api/company/spb/zamenaVody', (req, res) => {
-  res.send(require('./data/spb/zamena-schetchikov-vody-rating/output.json'))
-})
-app.get('/api/company/spb/zamenaTepl', (req, res) => {
-  res.send(require('./data/spb/zamena-teploschetchikov-rating/output.json'))
-})
 
 
 app.post('/api/rating-msk-1', async (req, res) => {
@@ -208,5 +152,7 @@ app.post('/api/rating-spb-7', async (req, res) => {
 )
 
 app.use('/api/static', express.static('src/files'))
+
+app.use('/api/data', express.static('src/data'))
 
 server.listen(port, () => { console.log('server listening', port) });
