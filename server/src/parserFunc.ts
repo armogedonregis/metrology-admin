@@ -7,6 +7,9 @@ export default async function ParserFunc(url: string, path: string, root: string
     let items: ICompany[] = []
     let number = 0;
     let id = 0;
+
+    fs.rm(`src/data/${root}/${path}/output.json`, () => {});
+
     const browser = await puppeteer.launch({ headless: 'new', args: ["--no-sandbox"] })
     const page = await browser.newPage();
     await page.goto(url);
@@ -120,8 +123,6 @@ export default async function ParserFunc(url: string, path: string, root: string
 
         items.push({ id, img, email, title, finalRating, goodRating, fastRating, lowRating, oficialPrice, peoplePrice, ratingPrice, attestat, dateSend, review, requestCount });
     }
-
-    fs.rm(`src/data/${root}/${path}/output.json`, () => {});
 
     fs.mkdir(`src/data/${root}/${path}`, async () => {
         fs.writeFile(`src/data/${root}/${path}/output.json`, JSON.stringify(items), async (err) => {

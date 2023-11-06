@@ -11,7 +11,7 @@ export default function Home() {
   const [mskParsing, { isLoading: mskLoad }] = useParsingMskMutation()
  
   const startMsk = (url: string) => {
-    if (!mskLoad) {
+    if (!mskLoad && !loadSpb) {
       mskParsing(url)
     }
   };
@@ -19,7 +19,7 @@ export default function Home() {
   const [spbParsing, { isLoading: loadSpb }] = useParsingSpbMutation()
 
   const startSpb = (url: string) => {
-    if (!loadSpb) {
+    if (!loadSpb && !mskLoad) {
       spbParsing(url)
     }
   };
@@ -41,27 +41,27 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-5">
             <div className="flex justify-center mt-5">
-              <button disabled={mskLoad} onClick={() => startMsk('rating-msk-1')} className={`${!mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по поверке счетчиков воды в Москве</button>
+              <button disabled={mskLoad || loadSpb} onClick={() => startMsk('rating-msk-1')} className={`${!mskLoad && !loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по поверке счетчиков воды в Москве</button>
             </div>
 
             <div className="flex justify-center mt-5">
-              <button disabled={mskLoad} onClick={() => startMsk('rating-msk-2')} className={`${!mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Замена счетчиков воды в Москве рейтинг</button>
+              <button disabled={mskLoad || loadSpb} onClick={() => startMsk('rating-msk-2')} className={`${!mskLoad && !loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Замена счетчиков воды в Москве рейтинг</button>
             </div>
 
             <div className="flex justify-center mt-5">
-              <button disabled={mskLoad} onClick={() => startMsk('rating-msk-3')} className={`${!mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Установка счетчиков воды в Москве рейтинг</button>
+              <button disabled={mskLoad || loadSpb} onClick={() => startMsk('rating-msk-3')} className={`${!mskLoad && !loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Установка счетчиков воды в Москве рейтинг</button>
             </div>
 
             <div className="flex justify-center mt-5">
-              <button disabled={mskLoad} onClick={() => startMsk('rating-msk-4')} className={`${!mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Поверка теплосчетчиков в Москве рейтинг</button>
+              <button disabled={mskLoad || loadSpb} onClick={() => startMsk('rating-msk-4')} className={`${!mskLoad && !loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Поверка теплосчетчиков в Москве рейтинг</button>
             </div>
 
             <div className="flex justify-center mt-5">
-              <button disabled={mskLoad} onClick={() => startMsk('rating-msk-5')} className={`${!mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Замена теплосчетчиков в Москве рейтинг</button>
+              <button disabled={mskLoad || loadSpb} onClick={() => startMsk('rating-msk-5')} className={`${!mskLoad && !loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Замена теплосчетчиков в Москве рейтинг</button>
             </div>
 
             <div className="flex justify-center mt-5">
-              <button disabled={mskLoad} onClick={() => startMsk('rating-msk-6')} className={`${!mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Установка счетчиков тепла в Москве рейтинг</button>
+              <button disabled={mskLoad || loadSpb} onClick={() => startMsk('rating-msk-6')} className={`${!mskLoad && !loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Установка счетчиков тепла в Москве рейтинг</button>
             </div>
           </div>
 
@@ -78,25 +78,25 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-5">
               <div className="flex justify-center mt-5">
-                <button disabled={loadSpb} onClick={() => startSpb('rating-spb-1')} className={`${!loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по поверке счетчиков воды в СПБ</button>
+                <button disabled={loadSpb || mskLoad} onClick={() => startSpb('rating-spb-1')} className={`${!loadSpb && !mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по поверке счетчиков воды в СПБ</button>
               </div>
               <div className="flex justify-center mt-5">
-                <button disabled={loadSpb} onClick={() => startSpb('rating-spb-2')} className={`${!loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по замене счетчиков воды в СПБ</button>
+                <button disabled={loadSpb || mskLoad} onClick={() => startSpb('rating-spb-2')} className={`${!loadSpb && !mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по замене счетчиков воды в СПБ</button>
               </div>
               <div className="flex justify-center mt-5">
-                <button disabled={loadSpb} onClick={() => startSpb('rating-spb-3')} className={`${!loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по установка счетчиков воды в СПБ</button>
+                <button disabled={loadSpb || mskLoad} onClick={() => startSpb('rating-spb-3')} className={`${!loadSpb && !mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по установка счетчиков воды в СПБ</button>
               </div>
               <div className="flex justify-center mt-5">
-                <button disabled={loadSpb} onClick={() => startSpb('rating-spb-4')} className={`${!loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по поверке теплосчетчиков воды в СПБ</button>
+                <button disabled={loadSpb || mskLoad} onClick={() => startSpb('rating-spb-4')} className={`${!loadSpb && !mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по поверке теплосчетчиков воды в СПБ</button>
               </div>
               <div className="flex justify-center mt-5">
-                <button disabled={loadSpb} onClick={() => startSpb('rating-spb-5')} className={`${!loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по замене теплосчетчико в СПБ</button>
+                <button disabled={loadSpb || mskLoad} onClick={() => startSpb('rating-spb-5')} className={`${!loadSpb && !mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по замене теплосчетчико в СПБ</button>
               </div>
               <div className="flex justify-center mt-5">
-                <button disabled={loadSpb} onClick={() => startSpb('rating-spb-6')} className={`${!loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по установке теплосчетчиков в СПБ</button>
+                <button disabled={loadSpb || mskLoad} onClick={() => startSpb('rating-spb-6')} className={`${!loadSpb && !mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по установке теплосчетчиков в СПБ</button>
               </div>
               <div className="flex justify-center mt-5">
-                <button disabled={loadSpb} onClick={() => startSpb('rating-spb-7')} className={`${!loadSpb ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по установке кондиционеров в СПБ</button>
+                <button disabled={loadSpb || mskLoad} onClick={() => startSpb('rating-spb-7')} className={`${!loadSpb && !mskLoad ? 'bg-green-500' : 'bg-red-500 cursor-wait'} px-5 py-2 text-white`}>Рейтинг по установке кондиционеров в СПБ</button>
               </div>
             </div>
           </div>
